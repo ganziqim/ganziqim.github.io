@@ -1,38 +1,75 @@
 <!DOCTYPE html>
-<html lang="chinese (simplified)">
+<html lang="chinese (simplified)" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-        <meta charset="utf-8" />
-        <title>GanZiQim's memo</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+    <title>GanZiQim's memo</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+
+<link rel="canonical" href="">
+        <meta name="author" content="GanZiQim" />
+
+    <!-- Open Graph tags -->
+        <meta property="og:site_name" content="GanZiQim's memo" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="GanZiQim's memo"/>
+        <meta property="og:url" content=""/>
+        <meta property="og:description" content="GanZiQim's memo"/>
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+
+
 </head>
+<body>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">GanZiQim's memo </a></h1>
-                <nav><ul>
-                    <li><a href="/pages/about.html">About</a></li>
-                    <li><a href="/category/vim.html">Vim</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/posts/vim/vim.html">Vim</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2017-12-25T00:00:00+08:00">
-                Published: 周一 25 十二月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/ganziqim.html">GanZiQim</a>
-        </address>
-<p>In <a href="/category/vim.html">Vim</a>.</p>
-
-</footer><!-- /.post-info --><h1>注释代码的四种姿势</h1>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+GanZiQim's memo            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/pages/about.html">
+                             About
+                          </a></li>
+                        <li >
+                            <a href="/category/vim.html">Vim</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <article>
+                <h2><a href="/posts/vim/vim-four.html">Vim Four</a></h2>
+                <div class="summary"><h1>注释代码的四种姿势</h1>
 <p>之前的博客计划又因为~~懒~~各种各样的原因延后了，想着总不能这么一直拖下去，于是就有了这篇博客...</p>
 <p>我们给代码添加注释基本上有两种场景，一种是给模块、类、函数编写docstring，而另一种则是临时将已经存在的代码注释掉。当我们想临时注释代码时，如果使用的是IDE，那么这是一件非常简单的事情，只需要框选代码然后按一组快捷键就可以了。可是Vim并没有提供添加注释的快捷键，这对于新手来说是一个无法避免的坑。</p>
 <p>不过Vim的优势也在于它的灵活性，区区注释是没办法难倒Vimer的。上帝关闭了一扇窗，却为你打开了另外四扇窗！下面我将通过介绍Vim中注释代码的四种姿势，带你感受Vim的强大之处。</p>
@@ -45,91 +82,90 @@
 <li>{Comment}代表注释符号，比如Python中的#，C中的//</li>
 <li>最后按&lt;ESC&gt;键退出插入模式</li>
 </ul>
-<p>以上就是最原始的添加注释的方法啦，符合直觉，在临时注释一行的时候非常方便。可是一次只能注释一行，要注释的行数一多的话，这种方法是万万行不通的，如果每一行都去手动添加注释，那真是一个“疯狂原始人”！</p>
-<h2>二 重复的工作应该交给机器人</h2>
-<p>每次都像上面那么敲，显然不符合一个Vimer该有的气质。那么有什么方法能把我们从重复的劳动中解放出来呢？答案是宏，宏就是Vim世界中的机器人，它会机械地重复你教给它的动作。</p>
-<p>让我们尝试录制一个宏：<code>q{Name}[I|^i|0i]{Comment}&lt;ESC&gt;jq</code>。</p>
-<ul>
-<li>第一个q代表开始录制一个宏</li>
-<li>{Name}是保存宏的寄存器的名称，可以是一个字母或者数字</li>
-<li>[I|^i|0i]{Comment}&lt;ESC&gt;完成一行的注释</li>
-<li>j将光标移动到下一行</li>
-<li>最后一个q结束宏的录制</li>
-</ul>
-<p>这串添加注释的宏会保存在你指定的寄存器里面，只需要调用<code>@{Name}</code>就可以重放宏了。当你想注释多行代码时，只需要在宏调用的前面加上次数就行，比如<code>10@{Name}</code>。看，机器人跑起来了！</p>
-<h2>三 机器人做不到的事</h2>
-<p>宏虽然方便，可是它毕竟只是一个没思想的机器人，只能帮我们做一些重复的工作，有些事宏是做不到的。设想一下，如果要注释的代码行数一多，一下子算不出来要重放几次，宏就显得有些力不从心了。（当然你可以选择直接使用多行注释）</p>
-<p>难道我们就没有更好的办法了吗？当然不是。这时候就要请出Vim的查找替换功能了：<code>:{Start},{End}s/^/{Comment}&lt;ENTER&gt;</code>。</p>
-<ul>
-<li>冒号:开始一行命令</li>
-<li>{Start}代表注释开始的行数，{End}代表注释结束的行数，中间用逗号,隔开</li>
-<li>s（substitute）命令用于替换字符串</li>
-<li>第一个斜杠/后面跟着一个正则表达式，匹配被替换的字符串，这里用^匹配一行的起始位置</li>
-<li>第二个斜杠/后面跟着替换的内容，也就是注释符号{Comment}</li>
-<li>最后按回车键&lt;ENTER&gt;执行命令</li>
-</ul>
-<p>查找替换功能不仅仅可以用于生成注释，在不同的场景下还可以开发出更多不同的实用功能。</p>
-<h2>四 块sao操作</h2>
-<p>上面使用查找替换功能的方式看似已经完美了，可是在实际使用的时候还是不太舒服，究其原因是因为查找替换使用起来太麻烦了，每次都要敲很多的字符，太反直觉。作为一个合格的Vimer当然不可以满足于这种看起来美好，实际上麻烦的糖衣炮弹。</p>
-<p>在Vim中，有一个“VISUAL BLOCK”模式，可以给我们提供更直观的注释方法：<code>[&lt;C+v&gt;|&lt;C+q&gt;]{Lineno}G0I{Comment}&lt;ESC&gt;</code>。</p>
-<ul>
-<li>&lt;C+v&gt;启动块操作模式，由于Windows上面&lt;C+v&gt;跟粘贴的快捷键冲突了，所以被替换为&lt;C+q&gt;</li>
-<li>{Lineno}代表行数，G将光标跳转到前面指定的行，这里你也可以使用hjkl或者别的方式跳转，这也是VISUAL BLOCK模式的优势：直观</li>
-<li>0将光标移动到本行的第一个字符，防止有些代码不被框选到</li>
-<li>I开启插入模式（注意，这里不可以使用i）</li>
-<li>{Comment}代表注释符号</li>
-<li>&lt;ESC&gt;退出插入模式</li>
-</ul>
-<p>当你按下&lt;ESC&gt;的那一刻，就会发现所有被框选到的代码都加上了注释，perfect！</p>
-<h2>怎么取消注释</h2>
-<p>这是一道送分题：把插入注释的操作换成x（删除字符），查找替换则把前两个字符（..）替换为空即可。</p>
-<h2>有没有更懒的方法</h2>
-<p>什么？你还想更懒？？？很好，非常有前途...</p>
-<p>著名的Vim插件开发者<a href="https://github.com/scrooloose">Martin Grenfell</a>开发了一款插件<a href="https://github.com/scrooloose/nerdcommenter">NERD Commenter</a>。安装插件之后，只需要在VISUAL模式（v键）下选中代码块，然后按<code>&lt;leader&gt;cc</code>或者<code>&lt;leader&gt;cb</code>就可以添加注释了，取消注释则是<code>&lt;leader&gt;cu</code>。</p>
-<p>插件具体的细节在这就不介绍了，如果有需要了解的请移步<a href="https://github.com/scrooloose/nerdcommenter">项目根目录</a>。</p>
-<hr>
-<h2>总结</h2>
-<p>到这里有些读者可能会问，既然有现成的插件，为什么前面还要讲那么多废话呢？其实，本篇的重点不在于学习怎么添加注释，而在于通过这四种不同的添加注释的姿势，学习到一个Vimer该有的思考方式。~~看，我给圆回来了~~</p>
-<p>而且，毕竟不是所有环境都有现成的插件嘛，授人以鱼不如授人以渔，希望本篇能对你有所帮助。</p>
-<hr>
-<p>孔乙己自己知道不能和大佬们谈天，便只好向萌新说话。有一回对我说道，“你用过Vim么？”我略略点一点头。他说，“用过Vim，我便考你一考。Vim里面的注释，怎样做的？”我想，Python都不会写的人，也配考我么？便回过脸去，不再理会。孔乙己等了许久，很恳切的说道，“不能注释罢？我教给你，记着！这些方法应该记着。将来做大佬的时候，装逼要用。”我暗想我和大佬的等级还很远呢，而且大佬也从不屑于注释代码；又好笑，又不耐烦，懒懒的答他道，“谁要你教，不是按i然后加么？”孔乙己显出极高兴的样子，将两个指头的长指甲敲着屏幕，点头说，“对呀对呀！注释有四样加法，你知道么？”我愈不耐烦了，努着嘴走远。孔乙己刚打开Vim，想在键盘上敲字，见我毫不热心，便又叹一口气，显出极惋惜的样子。</p><p>There are <a href="/posts/vim/vim.html#disqus_thread">comments</a>.</p>                </article>
-            </aside><!-- /#featured -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
+<p>以上就是最原始的添加注释的方法啦，符合直觉，在临时注释一行的时候非常方便。可是一次只能注释一行，要注释的行数一多的话 …</p>
+                    <a class="btn btn-default btn-xs" href="/posts/vim/vim-four.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="#"><i class="fa fa-you-can-add-links-in-your-config-file-square fa-lg"></i> You can add links in your config file</a></li>
+    <li class="list-group-item"><a href="#"><i class="fa fa-another-social-link-square fa-lg"></i> Another social link</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://getpelican.com/" target="_blank">Pelican</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://python.org/" target="_blank">Python.org</a>
+    </li>
+    <li class="list-group-item">
+      <a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a>
+    </li>
+    <li class="list-group-item">
+      <a href="#" target="_blank">You can modify those links in your config file</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 GanZiQim
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
 
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+<!-- Disqus -->
 <script type="text/javascript">
-    var disqus_shortname = 'ganziqim';
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'ganziqim'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
     (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = 'https://' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
+<!-- End Disqus Code -->
+
+
 </body>
 </html>
