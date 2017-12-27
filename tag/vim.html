@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="chinese (simplified)" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Tags - GanZiQim's memo</title>
+    <title>Vim - GanZiQim's memo</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,7 +10,8 @@
 
 
 
-        <meta name="author" content="GanZiQim" />
+    <meta name="author" content="GanZiQim" />
+    <meta name="keywords" content="Vim" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="GanZiQim's memo" />
@@ -67,23 +68,27 @@ GanZiQim's memo            </a>
 <div class="container">
     <div class="row">
         <div class="col-sm-9">
-    <section id="tags">
-        <h1>Tags for GanZiQim's memo</h1>
-        <div class="panel-group" id="accordion">            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-vim">Vim <span class="badge pull-right">1</span></a>
-                    </h4>
+            <article>
+                <h2><a href="https://ganziqim.github.io/posts/vim/vim-four.html">Vim Four</a></h2>
+                <div class="summary"><h1>注释代码的四种姿势</h1>
+<p>之前的博客计划又因为~~懒~~各种各样的原因延后了，想着总不能这么一直拖下去，于是就有了这篇博客...</p>
+<p>我们给代码添加注释基本上有两种场景，一种是给模块、类、函数编写docstring，而另一种则是临时将已经存在的代码注释掉。当我们想临时注释代码时，如果使用的是IDE，那么这是一件非常简单的事情，只需要框选代码然后按一组快捷键就可以了。可是Vim并没有提供添加注释的快捷键，这对于新手来说是一个无法避免的坑。</p>
+<p>不过Vim的优势也在于它的灵活性，区区注释是没办法难倒Vimer的。上帝关闭了一扇窗，却为你打开了另外四扇窗！下面我将通过介绍Vim中注释代码的四种姿势，带你感受Vim的强大之处。</p>
+<hr>
+<h2>一 疯狂原始人</h2>
+<p>说到注释，稍微对Vim熟悉一些的人应该会下意识地敲出这套华丽的连招：<code>[I|^i|0i]{Comment}&lt;ESC&gt;</code>。</p>
+<ul>
+<li>I代表从本行的第一个非空字符插入，i代表从当前位置插入</li>
+<li>^将光标移动到本行的第一个非空字符，0将光标移动到本行的第一个字符（所以I和^i的效果其实是一样的）</li>
+<li>{Comment}代表注释符号，比如Python中的#，C中的//</li>
+<li>最后按&lt;ESC&gt;键退出插入模式</li>
+</ul>
+<p>以上就是最原始的添加注释的方法啦，符合直觉，在临时注释一行的时候非常方便。可是一次只能注释一行，要注释的行数一多的话 …</p>
+                    <a class="btn btn-default btn-xs" href="https://ganziqim.github.io/posts/vim/vim-four.html">more ...</a>
                 </div>
-                <div id="collapse-vim" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <p><span class="categories-timestamp"><time datetime="2017-12-25T20:20:00+08:00">周一 25 十二月 2017</time></span> <a href="https://ganziqim.github.io/posts/vim/vim-four.html">Vim Four</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </article>
+            <hr/>
 
-    </section>
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>
